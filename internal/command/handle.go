@@ -55,12 +55,13 @@ func Run(args []string) error {
 		return rclone.Exist(duration, destinationPath)
 	}
 
-	pterm.Info.Println("[rclone-multi] A simple wrapper for rclone for multi-remote backup operations")
-	pterm.Info.Println("")
-	pterm.Info.Println("> upload [source-file] [destination-path]")
-	pterm.Info.Println("> trim [duration] Delete files older than this in seconds or ms|s|m|h|d|w|M|y Ex: 10d or 10s")
-	pterm.Info.Println("> exist [duration] [destination-path] Check for existence of files newer than this in seconds or alert. ms|s|m|h|d|w|M|y Ex: 10d or 10s")
-	pterm.Info.Println("")
+	pterm.NewRGB(15, 199, 209).Println("")
+	pterm.NewRGB(15, 199, 209).Println("[rclone-multi] A simple wrapper for rclone for multi-remote backup operations")
+	pterm.NewRGB(15, 199, 209).Println("")
+	pterm.NewRGB(15, 199, 209).Println("> upload [source-file] [destination-path]")
+	pterm.NewRGB(15, 199, 209).Println("> trim [duration] Delete files older than this in seconds or ms|s|m|h|d|w|M|y Ex: 10d or 10s")
+	pterm.NewRGB(15, 199, 209).Println("> exist [duration] [destination-path] Check for existence of files newer than this in seconds or alert. ms|s|m|h|d|w|M|y Ex: 10d or 10s")
+	pterm.NewRGB(15, 199, 209).Println("")
 
 	return nil
 }
