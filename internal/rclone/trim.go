@@ -34,6 +34,7 @@ func Trim(time string) error {
 				pterm.Info.Printf("Deleting [%v] to [%v]\n", fileName, remote)
 
 				del := fmt.Sprintf("rclone deletefile %v:%v", remote, fileName)
+				pterm.Info.Println(del)
 				_, err = execCmd("bash", "-c", del)
 				if err != nil {
 					pterm.Error.Printf(
