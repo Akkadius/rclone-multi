@@ -10,11 +10,10 @@ import (
 )
 
 // Upload will upload a file to multiple destinations
-func Upload(sourceFile string, destPath string) {
+func Upload(sourceFile string, destPath string) error {
 	pterm.Info.Printf("Uploading file [%v] via remotes to path [%v]\n", sourceFile, destPath)
 
 	for _, remote := range getRemotes() {
-
 		execArgs := []string{
 			"copy",
 			sourceFile,
@@ -34,6 +33,8 @@ func Upload(sourceFile string, destPath string) {
 				destination,
 				err.Error(),
 			)
+
+			return err
 		}
 
 		pterm.Success.Printf("-- Remote [%v] Uploaded [%v] to [%v]\n", remote, sourceFile, destination)
@@ -56,4 +57,6 @@ func Upload(sourceFile string, destPath string) {
 			),
 		)
 	}
+	
+	return nil
 }

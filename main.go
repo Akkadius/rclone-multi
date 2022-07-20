@@ -2,12 +2,16 @@ package main
 
 import (
 	"github.com/Akkadius/rclone-multi/command"
+	"github.com/pterm/pterm"
 	"os"
 )
 
 func main() {
 	// process command line args
 	if len(os.Args) > 1 {
-		command.Run(os.Args)
+		err := command.Run(os.Args)
+		if err != nil {
+			pterm.Error.Println(err.Error())
+		}
 	}
 }

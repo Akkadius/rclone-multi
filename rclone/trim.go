@@ -12,7 +12,7 @@ import (
 
 // Trim will trim files older than specified time
 // example 10d will trim files older than 10 days
-func Trim(time string) {
+func Trim(time string) error {
 	pterm.Info.Printf("Deleting files older than [%v]\n", time)
 
 	for _, remote := range getRemotes() {
@@ -34,7 +34,17 @@ func Trim(time string) {
 				pterm.Info.Printf("Deleting [%v] to [%v]\n", fileName, remote)
 
 				del := fmt.Sprintf("rclone deletefile %v:%v", remote, fileName)
-				execCmd("bash", "-c", del)
+				_, err = execCmd("bash", "-c", del)
+				if err != nil {
+					pterm.Error.Printf(
+						"[Error] Failed to trim file [%v] via remote [%v] error [%v]\n",
+						fileName,
+						remote,
+						err.Error(),
+					)
+
+					return err
+				}
 
 				pterm.Success.Printf("[DONE] Deleting [%v] from [%v]\n", fileName, remote)
 
@@ -51,4 +61,6 @@ func Trim(time string) {
 			}
 		}
 	}
+
+	return nil
 }
