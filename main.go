@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/Akkadius/rclone-multi/command"
+	"github.com/Akkadius/rclone-multi/internal/command"
 	"github.com/pterm/pterm"
 	"os"
 )

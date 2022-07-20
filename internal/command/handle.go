@@ -1,7 +1,7 @@
 package command
 
 import (
-	"github.com/Akkadius/rclone-multi/rclone"
+	rclone2 "github.com/Akkadius/rclone-multi/internal/rclone"
 	"github.com/pterm/pterm"
 	"os"
 )
@@ -20,7 +20,7 @@ func Run(args []string) error {
 			destPath = args[3]
 		}
 
-		return rclone.Upload(sourceFile, destPath)
+		return rclone2.Upload(sourceFile, destPath)
 	}
 	if command == "trim" {
 		if len(args) < 3 {
@@ -28,7 +28,7 @@ func Run(args []string) error {
 			os.Exit(0)
 		}
 
-		return rclone.Trim(args[2])
+		return rclone2.Trim(args[2])
 	}
 	return nil
 }

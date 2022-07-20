@@ -2,7 +2,7 @@ package rclone
 
 import (
 	"fmt"
-	"github.com/Akkadius/rclone-multi/notify"
+	"github.com/Akkadius/rclone-multi/internal/notify"
 	"github.com/dustin/go-humanize"
 	"github.com/pterm/pterm"
 	"log"
@@ -49,13 +49,13 @@ func Trim(time string) error {
 				pterm.Success.Printf("[DONE] Deleting [%v] from [%v]\n", fileName, remote)
 
 				// send to notifiers
-				notify.Send(
+				notify.Info(
 					fmt.Sprintf(
-						"Trimmed (older than %v) [%v] (%v) via remote [%v]\n",
-						time,
+						"Trimmed [%v] (%v) via remote [%v] (older than %v)\n",
 						fileName,
 						humanize.Bytes(size),
 						remote,
+						time,
 					),
 				)
 			}

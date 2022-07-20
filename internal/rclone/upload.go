@@ -2,7 +2,7 @@ package rclone
 
 import (
 	"fmt"
-	"github.com/Akkadius/rclone-multi/notify"
+	"github.com/Akkadius/rclone-multi/internal/notify"
 	"github.com/dustin/go-humanize"
 	"github.com/pterm/pterm"
 	"log"
@@ -48,7 +48,7 @@ func Upload(sourceFile string, destPath string) error {
 		size := uint64(fi.Size())
 
 		// send to notifiers
-		notify.Send(
+		notify.Info(
 			fmt.Sprintf(
 				"Uploaded [%v] (%v) to [%v]\n",
 				sourceFile,
@@ -57,6 +57,6 @@ func Upload(sourceFile string, destPath string) error {
 			),
 		)
 	}
-	
+
 	return nil
 }
