@@ -1,8 +1,10 @@
 # rclone-multi
 
-A simple wrapper for rclone for multi-remote backup operations
+A simple wrapper for [rclone](https://rclone.org/overview/) for multi-remote backup operations.
 
 Built for personal backup needs, available for whoever finds useful. 
+
+For example, if you send backups to `dropbox` and another `ssh` remote host at the same time, this simplifies what you need to wire up in scripts.
 
 ```
  INFO  [rclone-multi] A simple wrapper for rclone for multi-remote backup operations
@@ -83,3 +85,7 @@ By default the notifications source from the hostname of the machine running the
 ``` 
 NOTIFY_SOURCE_LABEL
 ```
+
+### .env Loader
+
+If supplied a `.env` in the same folder as the running binary, it will load the variables present. Otherwise the binary defaults to system environment variables.
