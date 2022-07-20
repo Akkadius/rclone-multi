@@ -13,8 +13,6 @@ Built for personal backup needs, available for whoever finds useful.
  INFO  
 ```
 
-![image](https://user-images.githubusercontent.com/3319450/179931054-b5016232-7e3a-492c-9ff4-40dcc62357a5.png)
-
 ### Upload
 
 Upload to as many remotes configured locally 
@@ -27,8 +25,6 @@ cmiles@cmiles-msi:~/code/rclone-multi$ go run main.go upload ~/Downloads/Menuett
  SUCCESS  -- Remote [local] Uploaded [/home/cmiles/Downloads/Menuetto.ttf] to [local:]
 
 ```
-
-![image](https://user-images.githubusercontent.com/3319450/179929857-e31f5b88-5001-45d2-9e20-607ceff2a5f9.png)
 
 ### Trim
 
@@ -45,7 +41,7 @@ cmiles@cmiles-msi:~/code/rclone-multi$ go run main.go trim 30d
 
 ### Existence
 
-Check for existence of files in a path or send an alert
+Check for existence of files in a path within a specified time frame or send an alert. This is useful as a watchdog to let you know if your backups are failing you.
 
 ``` 
 go run main.go exist 1s .
@@ -54,13 +50,13 @@ go run main.go exist 1s .
  INFO  Remote [local]
 ```
 
-Discord
+**Alert Example**
 
-![image](https://user-images.githubusercontent.com/3319450/179931717-4cfd3a56-d827-4418-a86b-13688c69355b.png)
+The following example gets sent via notifiers
 
-Slack
-
-![image](https://user-images.githubusercontent.com/3319450/179931761-4fed09d8-b913-4fa1-9ee0-082beac698e4.png)
+``` 
+[ALERT] [hostname] No files or backups found for remote [local] path [.] duration [1s]
+```
 
 ### Notifications
 
