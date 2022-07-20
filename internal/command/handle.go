@@ -55,7 +55,7 @@ func Run(args []string) error {
 		return rclone.Exist(duration, destinationPath)
 	}
 
-	pterm.Info.Println("[rclone-multi] A wrapper for rclone for multi-remote backup operations")
+	pterm.Info.Println("[rclone-multi] A simple wrapper for rclone for multi-remote backup operations")
 	pterm.Info.Println("")
 	pterm.Info.Println("> upload [source-file] [destination-path]")
 	pterm.Info.Println("> trim [duration] Delete files older than this in seconds or ms|s|m|h|d|w|M|y Ex: 10d or 10s")

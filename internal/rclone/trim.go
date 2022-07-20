@@ -22,16 +22,19 @@ func Trim(time string) error {
 		pterm.Info.Printf("Remote [%v]\n", remote)
 
 		for _, line := range strings.Split(output, "\n") {
+			line = strings.TrimSpace(line)
+
+			// ex: 48720 2022-06-11 17:40:05.033892549 Menuetto.ttf
 			cols := strings.Split(line, " ")
 			if len(cols) > 3 {
-				size, err := strconv.ParseUint(cols[1], 10, 32)
+				size, err := strconv.ParseUint(cols[0], 10, 32)
 				if err != nil {
 					log.Println(err)
 				}
 
-				fileName := cols[4]
+				fileName := cols[3]
 
-				pterm.Info.Printf("Deleting [%v] to [%v]\n", fileName, remote)
+				pterm.Info.Printf("Deleting [%v] via [%v]\n", fileName, remote)
 
 				del := fmt.Sprintf("rclone deletefile %v:%v", remote, fileName)
 				pterm.Info.Println(del)
