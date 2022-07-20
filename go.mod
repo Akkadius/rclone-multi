@@ -2,7 +2,11 @@ module github.com/Akkadius/rclone-multi
 
 go 1.18
 
-require github.com/dustin/go-humanize v1.0.0
+require (
+	github.com/dustin/go-humanize v1.0.0
+	github.com/joho/godotenv v1.4.0
+	github.com/pterm/pterm v0.12.42
+)
 
 require (
 	atomicgo.dev/cursor v0.1.1 // indirect
@@ -11,7 +15,6 @@ require (
 	github.com/gookit/color v1.5.0 // indirect
 	github.com/lithammer/fuzzysearch v1.1.5 // indirect
 	github.com/mattn/go-runewidth v0.0.13 // indirect
-	github.com/pterm/pterm v0.12.42 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
 	github.com/xo/terminfo v0.0.0-20210125001918-ca9a967f8778 // indirect
 	golang.org/x/sys v0.0.0-20220319134239-a9b59b0215f8 // indirect
