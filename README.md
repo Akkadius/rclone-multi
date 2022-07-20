@@ -14,7 +14,6 @@ For example, if you send backups to `dropbox` and another `ssh` remote host at t
 > trim [duration] Delete files older than this in seconds or ms|s|m|h|d|w|M|y Ex: 10d or 10s
 > exist [duration] [destination-path] Check for existence of files newer than this in seconds or alert. ms|s|m|h|d|w|M|y Ex: 10d or 10s
 
-
 ```
 
 ### To Install
