@@ -27,6 +27,18 @@ func Upload(sourceFile string, destPath string) error {
 
 		_, err := execCmd("rclone", execArgs...)
 		if err != nil {
+
+			// send to notifiers
+			notify.Alert(
+				fmt.Sprintf(
+					"[Error] Uploading [%v] to [%v] Error (%v)\n",
+					sourceFile,
+					destination,
+					err.Error(),
+				),
+			)
+
+			// terminal
 			pterm.Error.Printf(
 				"[Error] Uploading [%v] to [%v] Error (%v)\n",
 				sourceFile,

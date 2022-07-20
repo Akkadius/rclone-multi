@@ -4,7 +4,9 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"github.com/pterm/pterm"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"time"
 )
@@ -26,8 +28,8 @@ type SlackRequestBody struct {
 	IconEmoji string `json:"icon_emoji"`
 }
 
-// SendSlackNotification ...
-func SendSlackNotification(input *SendSlackNotificationInput) error {
+// sendSlackNotification ...
+func sendSlackNotification(input *SendSlackNotificationInput) error {
 	slackBody, err := json.Marshal(&SlackRequestBody{
 		Text:      input.Message,
 		Channel:   input.Channel,
@@ -55,9 +57,23 @@ func SendSlackNotification(input *SendSlackNotificationInput) error {
 		return err
 	}
 
+	if resp.StatusCode != http.StatusOK {
+		pterm.Error.Println((string(buf)))
+	}
+
 	if string(buf) != "ok" {
-		return errors.New("Not OK")
+		return errors.New("Not OK" + string(buf))
 	}
 
 	return nil
+}
+
+func sendSlackWebhook(msg string, webhook string) {
+	err := sendSlackNotification(&SendSlackNotificationInput{
+		WebhookURL: webhook,
+		Message:    msg,
+	})
+	if err != nil {
+		log.Println(err)
+	}
 }

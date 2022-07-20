@@ -2,7 +2,6 @@ package notify
 
 import (
 	"fmt"
-	"log"
 	"os"
 )
 
@@ -36,19 +35,30 @@ func getNotifySourceLabelString() string {
 
 // Info sends a notification to an info channel
 func Info(message string) {
+	// slack
 	slackWebhook := os.Getenv("NOTIFY_INFO_SLACK_WEBHOOK")
 	if len(slackWebhook) > 0 {
-		err := SendSlackNotification(&SendSlackNotificationInput{
-			WebhookURL: os.Getenv("NOTIFY_INFO_SLACK_WEBHOOK"),
-			Message: fmt.Sprintf(
+		sendSlackWebhook(
+			fmt.Sprintf(
 				"[Info] %v %v",
 				getNotifySourceLabelString(),
 				message,
 			),
-		})
-		if err != nil {
-			log.Println(err)
-		}
+			os.Getenv("NOTIFY_INFO_SLACK_WEBHOOK"),
+		)
+	}
+
+	// discord
+	discordWebhook := os.Getenv("NOTIFY_INFO_DISCORD_WEBHOOK")
+	if len(discordWebhook) > 0 {
+		_ = sendDiscordWebhook(
+			fmt.Sprintf(
+				"[Info] %v %v",
+				getNotifySourceLabelString(),
+				message,
+			),
+			os.Getenv("NOTIFY_INFO_DISCORD_WEBHOOK"),
+		)
 	}
 }
 
@@ -56,16 +66,26 @@ func Info(message string) {
 func Alert(message string) {
 	slackWebhook := os.Getenv("NOTIFY_ALERT_SLACK_WEBHOOK")
 	if len(slackWebhook) > 0 {
-		err := SendSlackNotification(&SendSlackNotificationInput{
-			WebhookURL: os.Getenv("NOTIFY_ALERT_SLACK_WEBHOOK"),
-			Message: fmt.Sprintf(
+		sendSlackWebhook(
+			fmt.Sprintf(
 				"[ALERT] %v %v",
 				getNotifySourceLabelString(),
 				message,
 			),
-		})
-		if err != nil {
-			log.Println(err)
-		}
+			os.Getenv("NOTIFY_ALERT_SLACK_WEBHOOK"),
+		)
+	}
+
+	// discord
+	discordWebhook := os.Getenv("NOTIFY_ALERT_DISCORD_WEBHOOK")
+	if len(discordWebhook) > 0 {
+		_ = sendDiscordWebhook(
+			fmt.Sprintf(
+				"[ALERT] %v %v",
+				getNotifySourceLabelString(),
+				message,
+			),
+			os.Getenv("NOTIFY_ALERT_DISCORD_WEBHOOK"),
+		)
 	}
 }
