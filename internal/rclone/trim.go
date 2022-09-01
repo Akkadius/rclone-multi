@@ -6,6 +6,7 @@ import (
 	"github.com/dustin/go-humanize"
 	"github.com/pterm/pterm"
 	"log"
+	"path"
 	"strconv"
 	"strings"
 )
@@ -20,7 +21,8 @@ func Trim(destPath string, time string) error {
 		cmd := fmt.Sprintf("rclone lsl %v:%v --min-age=%v", remote, destPath, time)
 		output, _ := execCmd("bash", "-c", cmd)
 
-		pterm.Info.Printf("Remote [%v]\n", remote)
+		pterm.Info.Printf("Remote directory listing [%v] [%v]\n", remote, cmd)
+		pterm.Info.Printf("%v\n", output)
 
 		for _, line := range strings.Split(output, "\n") {
 			line = strings.TrimSpace(line)
@@ -37,7 +39,9 @@ func Trim(destPath string, time string) error {
 
 				pterm.Info.Printf("Deleting [%v] via [%v]\n", fileName, remote)
 
-				del := fmt.Sprintf("rclone deletefile %v:%v", remote, fileName)
+				destFile := path.Join(destPath, fileName)
+
+				del := fmt.Sprintf("rclone deletefile %v:%v", remote, destFile)
 				pterm.Info.Println(del)
 				_, err = execCmd("bash", "-c", del)
 				if err != nil {
@@ -51,7 +55,7 @@ func Trim(destPath string, time string) error {
 					return err
 				}
 
-				pterm.Success.Printf("[DONE] Deleting [%v] from [%v]\n", fileName, remote)
+				pterm.Success.Printf("[DONE] Deleting [%v] from [%v]\n", destFile, remote)
 
 				// send to notifiers
 				notify.Info(

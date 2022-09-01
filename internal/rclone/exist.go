@@ -16,10 +16,10 @@ func Exist(destPath string, duration string) error {
 		pterm.Info.Println(cmd)
 
 		output, _ := execCmd("bash", "-c", cmd)
+		pterm.Info.Printf("Remote [%v] [%v]\n", remote, cmd)
+
 		pterm.Info.Println(output)
-
-		pterm.Info.Printf("Remote [%v]\n", remote)
-
+		
 		// no files
 		if len(strings.Split(output, "\n")) == 1 {
 			notify.Alert(
