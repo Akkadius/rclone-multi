@@ -11,12 +11,13 @@ import (
 )
 
 // Trim will trim files older than specified time
+// in the specified directory
 // example 10d will trim files older than 10 days
-func Trim(time string) error {
+func Trim(destPath string, time string) error {
 	pterm.Info.Printf("Deleting files older than [%v]\n", time)
 
 	for _, remote := range getRemotes() {
-		cmd := fmt.Sprintf("rclone lsl %v: --min-age=%v", remote, time)
+		cmd := fmt.Sprintf("rclone lsl %v:%v --min-age=%v", remote, destPath, time)
 		output, _ := execCmd("bash", "-c", cmd)
 
 		pterm.Info.Printf("Remote [%v]\n", remote)
