@@ -31,36 +31,42 @@ func Run(args []string) error {
 	// trim
 	if command == "trim" {
 		if len(args) < 3 {
-			pterm.Info.Println("Usage: trim [duration] Delete files older than this in seconds or ms|s|m|h|d|w|M|y Ex: 10d or 10s")
+			pterm.Info.Println("Usage: trim [path] [duration] Delete files older than this in seconds or ms|s|m|h|d|w|M|y Ex: 10d or 10s")
 			os.Exit(0)
 		}
 
-		return rclone.Trim(args[2])
+		destinationPath := args[2]
+		duration := args[3]
+		if destinationPath == "." {
+			destinationPath = ""
+		}
+
+		return rclone.Trim(destinationPath, duration)
 	}
 
 	// exist
 	// checks for if backups or files exist within this time in location
 	if command == "exist" {
 		if len(args) < 3 {
-			pterm.Info.Println("Usage: exist [duration] [destination-path] Check for existence of files newer than this in seconds or alert. ms|s|m|h|d|w|M|y Ex: 10d or 10s")
+			pterm.Info.Println("Usage: exist [destination-path] [duration] Check for existence of files newer than this in seconds or alert. ms|s|m|h|d|w|M|y Ex: 10d or 10s")
 			os.Exit(0)
 		}
 
-		duration := args[2]
-		destinationPath := ""
-		if len(args) > 3 {
-			destinationPath = args[3]
+		duration := args[3]
+		destinationPath := args[2]
+		if destinationPath == "." {
+			destinationPath = ""
 		}
 
-		return rclone.Exist(duration, destinationPath)
+		return rclone.Exist(destinationPath, duration)
 	}
 
 	pterm.NewRGB(15, 199, 209).Println("")
 	pterm.NewRGB(15, 199, 209).Println("[rclone-multi] A simple wrapper for rclone for multi-remote backup operations")
 	pterm.NewRGB(15, 199, 209).Println("")
 	pterm.NewRGB(15, 199, 209).Println("> upload [source-file] [destination-path]")
-	pterm.NewRGB(15, 199, 209).Println("> trim [duration] Delete files older than this in seconds or ms|s|m|h|d|w|M|y Ex: 10d or 10s")
-	pterm.NewRGB(15, 199, 209).Println("> exist [duration] [destination-path] Check for existence of files newer than this in seconds or alert. ms|s|m|h|d|w|M|y Ex: 10d or 10s")
+	pterm.NewRGB(15, 199, 209).Println("> trim [destination-path (. for current dir)] [duration] Delete files older than this in seconds or ms|s|m|h|d|w|M|y Ex: 10d or 10s")
+	pterm.NewRGB(15, 199, 209).Println("> exist [destination-path (. for current dir)] [duration] Check for existence of files newer than this in seconds or alert. ms|s|m|h|d|w|M|y Ex: 10d or 10s")
 	pterm.NewRGB(15, 199, 209).Println("")
 
 	return nil
